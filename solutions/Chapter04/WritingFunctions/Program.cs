@@ -12,44 +12,19 @@ static void TimesTable(byte number)
 // TimesTable(12);
 
 
-static decimal CalculateTax(
-  decimal amount, string twoLetterRegionCode)
+static decimal CalculateTax(decimal amount, string twoLetterRegionCode)
 {
-    decimal rate = 0.0M;
-    switch (twoLetterRegionCode)
+    decimal rate = twoLetterRegionCode switch
     {
-        case "CH": // Switzerland
-            rate = 0.08M;
-            break;
-        case "DK": // Denmark
-        case "NO": // Norway
-            rate = 0.25M;
-            break;
-        case "GB": // United Kingdom
-        case "FR": // France
-            rate = 0.2M;
-            break;
-        case "HU": // Hungary
-            rate = 0.27M;
-            break;
-        case "OR": // Oregon
-        case "AK": // Alaska
-        case "MT": // Montana
-            rate = 0.0M;
-            break;
-        case "ND": // North Dakota
-        case "WI": // Wisconsin
-        case "ME": // Maine
-        case "VA": // Virginia
-            rate = 0.05M;
-            break;
-        case "CA": // California
-            rate = 0.0825M;
-            break;
-        default: // most US states
-            rate = 0.06M;
-            break;
-    }
+        "CH" => 0.08M, // Switzerland
+        "DK" or "NO" => 0.25M, // Denmark, Norway
+        "GB" or "FR" => 0.2M, // United Kingdom, France
+        "HU" => 0.27M, // Hungary
+        "OR" or "AK" or "MT" => 0.0M, // Oregon, Alaska, Montana
+        "ND" or "WI" or "ME" or "VA" => 0.05M, // North Dakota, Wisconsin, Maine, Virginia
+        "CA" => 0.0825M, // California
+        _ => 0.06M  // Most US states
+    };
     return amount * rate;
 }
 
