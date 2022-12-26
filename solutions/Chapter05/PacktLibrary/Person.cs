@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using static System.Console;
 
 namespace Packt.Shared
@@ -11,5 +12,7 @@ namespace Packt.Shared
         public WondersOfTheAncientWorld FavoriteAncientWonder;
 
         public WondersOfTheAncientWorld BucketList;
+
+        public List<Person> Children = new List<Person>();
     }
 }
