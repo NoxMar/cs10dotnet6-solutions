@@ -22,3 +22,11 @@ bob.BucketList =
     | WondersOfTheAncientWorld.MausoleumAtHalicarnassus;
 // bob.BucketList = (WondersOfTheAncientWorld)18;
 WriteLine($"{bob.Name}'s bucket list is {bob.BucketList}");
+
+bob.Children.Add(new Person() { Name = "Alfred" }); // C# 3.0 and later
+bob.Children.Add(new() { Name = "Zoe" }); // C# 9.0 and later
+WriteLine($"{bob.Name} has {bob.Children.Count} children:");
+foreach (var child in bob.Children)
+{
+    WriteLine($"  {child.Name}");
+}
