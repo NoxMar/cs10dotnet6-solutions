@@ -16,3 +16,9 @@ WriteLine($"{alice.Name} was born on {alice.DateOfBirth:dd MMM yy}");
 bob.FavoriteAncientWonder = WondersOfTheAncientWorld.StatueOfZeusAtOlympia;
 
 WriteLine($"{bob.Name}'s favorite wonder is {bob.FavoriteAncientWonder}, Its integer is {(int)bob.FavoriteAncientWonder}");
+
+bob.BucketList =
+    WondersOfTheAncientWorld.HangingGardensOfBabylon
+    | WondersOfTheAncientWorld.MausoleumAtHalicarnassus;
+// bob.BucketList = (WondersOfTheAncientWorld)18;
+WriteLine($"{bob.Name}'s bucket list is {bob.BucketList}");
