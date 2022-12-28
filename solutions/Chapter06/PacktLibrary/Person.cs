@@ -31,4 +31,21 @@ public class Person : object
     {
         return Person.Procreate(p1, p2);
     }
+
+    // method with a local function
+    public static int Factorial(int number)
+    {
+        if (number < 0)
+        {
+            throw new ArgumentException(
+                $"{nameof(number)} cannot be less than zero.");
+        }
+        return localFactorial(number);
+
+        int localFactorial(int localNumber) => localNumber switch
+        {
+            < 1 => 1,
+            _ => localNumber * localFactorial(localNumber - 1)
+        };
+    }
 }
