@@ -10,6 +10,8 @@ Person baby1 = marry.ProcreateWith(harry);
 baby1.Name = "Gary";
 // call static method
 Person baby2 = Person.Procreate(harry, jill);
+// call an operator
+Person baby3 = harry * marry;
 
 WriteLine($"{harry.Name} has {harry.Children.Count} children.");
 WriteLine($"{marry.Name} has {marry.Children.Count} children.");
