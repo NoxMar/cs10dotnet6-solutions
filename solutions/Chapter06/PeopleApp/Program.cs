@@ -20,3 +20,16 @@ WriteLine($"{jill.Name} has {jill.Children.Count} children.");
 WriteLine($"{harry.Name}'s first child is named \"{harry.Children[0].Name}\"");
 
 WriteLine($"5! is {Person.Factorial(5)}");
+
+harry.Shout = Harry_Shout;
+for (int i = 0; i < 4; i++)
+{
+    harry.Poke();
+}
+
+static void Harry_Shout(object? sender, EventArgs e)
+{
+    if (sender is null) return;
+    Person p = (Person)sender;
+    WriteLine($"{p.Name} is this angry: {p.AngerLevel}.");
+}

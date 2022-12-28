@@ -9,6 +9,20 @@ public class Person : object
     public DateTime DateOfBirth;
     public List<Person> Children = new();
 
+    // delegate field
+    public EventHandler? Shout;
+    // data field
+    public int AngerLevel;
+    // method
+    public void Poke()
+    {
+        AngerLevel++;
+        if (AngerLevel >= 3)
+        {
+            Shout?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     public void WriteToConsole()
     {
         WriteLine($"{Name} was born on a {DateOfBirth:dddd}.");
