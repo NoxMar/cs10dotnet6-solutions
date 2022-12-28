@@ -21,7 +21,7 @@ WriteLine($"{harry.Name}'s first child is named \"{harry.Children[0].Name}\"");
 
 WriteLine($"5! is {Person.Factorial(5)}");
 
-harry.Shout = Harry_Shout;
+harry.Shout += Harry_Shout;
 for (int i = 0; i < 4; i++)
 {
     harry.Poke();

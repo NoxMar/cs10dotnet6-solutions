@@ -10,7 +10,7 @@ public class Person : object
     public List<Person> Children = new();
 
     // delegate field
-    public EventHandler? Shout;
+    public event EventHandler? Shout;
     // data field
     public int AngerLevel;
     // method
