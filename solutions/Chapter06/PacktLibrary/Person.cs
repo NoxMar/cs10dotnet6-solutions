@@ -2,7 +2,7 @@
 
 namespace Packt.Shared;
 
-public class Person : object
+public class Person : object, IComparable<Person>
 {
     // fields
     public string? Name; // ? - nullable
@@ -61,5 +61,11 @@ public class Person : object
             < 1 => 1,
             _ => localNumber * localFactorial(localNumber - 1)
         };
+    }
+
+    public int CompareTo(Person? other)
+    {
+        if (Name is null) return 0;
+        return Name.CompareTo(other?.Name);
     }
 }

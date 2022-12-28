@@ -42,3 +42,31 @@ lookupObject.Add(harry, "Delta");
 int key = 2;
 WriteLine($"Key {key} has value: {lookupObject[key]}");
 WriteLine($"Key {harry} has value: {lookupObject[harry]}");
+
+// generic lookup collection
+Dictionary<int, string> lookupIntString = new();
+lookupIntString.Add(key: 1, value: "Alpha");
+lookupIntString.Add(key: 2, value: "Beta");
+lookupIntString.Add(key: 3, value: "Gamma");
+lookupIntString.Add(key: 4, value: "Delta");
+key = 3;
+WriteLine($"Key {key} has value: {lookupObject[key]}");
+
+Person[] people =
+{
+    new() { Name = "Simon" },
+    new() { Name = "Jenny" },
+    new() { Name = "Adam" },
+    new() { Name = "Richard" }
+};
+WriteLine("Initial list of people:");
+foreach (var p in people)
+{
+    WriteLine($"  {p.Name}");
+}
+WriteLine("Use Person's IComparable implementation to sort:");
+Array.Sort(people);
+foreach (var p in people)
+{
+    WriteLine($"  {p.Name}");
+}
