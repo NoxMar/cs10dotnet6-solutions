@@ -103,3 +103,19 @@ aliceInEmployee.WriteToConsole();
 aliceInPerson.WriteToConsole();
 WriteLine(aliceInEmployee.ToString());
 WriteLine(aliceInPerson.ToString());
+
+if (aliceInPerson is Employee explicitAlice)
+{
+    WriteLine($"{nameof(aliceInPerson)} IS an Employee");
+}
+
+Employee? aliceAsEmployee = aliceInPerson as Employee; // could be null
+if (aliceAsEmployee != null)
+{
+    WriteLine($"{nameof(aliceInPerson)} AS an Employee");
+    // safely do something with aliceAsEmployee
+}
+
+// inverted check here to demonstrate is not syntax
+string isOrIsnt = aliceInPerson is not Employee ? "isn't" : "is";
+WriteLine($"{nameof(aliceInPerson)} {isOrIsnt} an Employee");
