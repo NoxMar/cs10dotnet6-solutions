@@ -119,3 +119,13 @@ if (aliceAsEmployee != null)
 // inverted check here to demonstrate is not syntax
 string isOrIsnt = aliceInPerson is not Employee ? "isn't" : "is";
 WriteLine($"{nameof(aliceInPerson)} {isOrIsnt} an Employee");
+
+try
+{
+    john.TimeTravel(when: new(1999, 12, 31));
+    john.TimeTravel(when: new(1950, 12, 25));
+}
+catch (PersonException ex)
+{
+    WriteLine(ex.Message);
+}
