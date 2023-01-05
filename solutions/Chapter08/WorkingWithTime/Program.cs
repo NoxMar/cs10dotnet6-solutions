@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using System.Globalization;
+using static System.Console;
 
 WriteLine("Earliest date/time value is: {0}", DateTime.MinValue);
 WriteLine("UNIX epoch date/time value is: {0}", DateTime.UnixEpoch);
@@ -38,3 +39,23 @@ WriteLine("Kids wake up on Christmas: {0}",
   kidsWakeUp);
 WriteLine("The kids woke me up at {0}",
   kidsWakeUp.ToShortTimeString());
+
+CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-GB");
+
+WriteLine("Current culture is: {0}",
+  arg0: CultureInfo.CurrentCulture.Name);
+string textDate = "4 July 2021";
+DateTime independenceDay = DateTime.Parse(textDate);
+WriteLine("Text: {0}, DateTime: {1:d MMMM}",
+  arg0: textDate,
+  arg1: independenceDay);
+textDate = "7/4/2021";
+independenceDay = DateTime.Parse(textDate);
+WriteLine("Text: {0}, DateTime: {1:d MMMM}",
+  arg0: textDate,
+  arg1: independenceDay);
+independenceDay = DateTime.Parse(textDate,
+  provider: CultureInfo.GetCultureInfo("en-US"));
+WriteLine("Text: {0}, DateTime: {1:d MMMM}",
+  arg0: textDate,
+  arg1: independenceDay);
