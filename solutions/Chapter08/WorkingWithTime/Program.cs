@@ -59,3 +59,10 @@ independenceDay = DateTime.Parse(textDate,
 WriteLine("Text: {0}, DateTime: {1:d MMMM}",
   arg0: textDate,
   arg1: independenceDay);
+
+DateOnly queensBirthday = new(year: 2022, month: 4, day: 21);
+WriteLine($"The Queen's next birthday is on {queensBirthday}.");
+TimeOnly partyStarts = new(hour: 20, minute: 30);
+WriteLine($"The Queen's party starts at {partyStarts}.");
+DateTime calendarEntry = queensBirthday.ToDateTime(partyStarts);
+WriteLine($"Add to your calendar: {calendarEntry}.");
