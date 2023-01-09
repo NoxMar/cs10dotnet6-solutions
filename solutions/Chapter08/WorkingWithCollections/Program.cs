@@ -1,6 +1,7 @@
 ﻿using static System.Console;
 
-WorkingWithLists();
+// WorkingWithLists();
+WorkingWithDictionaries();
 
 static void Output(string title, IEnumerable<string> collection)
 {
@@ -9,6 +10,41 @@ static void Output(string title, IEnumerable<string> collection)
     {
         WriteLine($"  {item}");
     }
+}
+
+static void WorkingWithDictionaries()
+{
+    // Explicitly adding
+    Dictionary<string, string> keywords = new();
+    keywords.Add(key: "int", value: "32-bit integer data type");
+    keywords.Add("long", "64-bit integer data type");
+    keywords.Add("float", "Single precision floating point number");
+
+    // Creating with values using initializer. Converted by calls to `Add` by the compiler.
+    Dictionary<string, string> keywords1 = new()
+    {
+      { "int", "32-bit integer data type" },
+      { "long", "64-bit integer data type" },
+      { "float", "Single precision floating point number" },
+    };
+
+    // Creating with values using alternative syntax. Converted by calls to `Add` by the compiler.
+    Dictionary<string, string> keywords2 = new()
+    {
+        ["int"] = "32-bit integer data type",
+        ["long"] = "64-bit integer data type",
+        ["float"] = "Single precision floating point number", // last comma is optional
+    };
+
+    Output("Dictionary keys:", keywords.Keys);
+    Output("Dictionary values:", keywords.Values);
+    WriteLine("Keywords and their definitions");
+    foreach (KeyValuePair<string, string> item in keywords)
+    {
+        WriteLine($"  {item.Key}: {item.Value}");
+    }
+    string key = "long";
+    WriteLine($"The definition of {key} is {keywords[key]}");
 }
 
 static void WorkingWithLists()
