@@ -32,6 +32,10 @@ WriteLine($"* Types:");
 Type[] types = assembly.GetTypes();
 foreach (Type type in types)
 {
+    if (Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) is not null)
+    {
+        continue;
+    }
     WriteLine();
     WriteLine($"Type: {type.FullName}");
     MemberInfo[] members = type.GetMembers();
