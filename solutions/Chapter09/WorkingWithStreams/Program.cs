@@ -4,22 +4,39 @@ using static System.Console;
 using static System.Environment;
 using static System.IO.Path;
 
-// WorkWithText();
-WorkWithXml();
+WorkWithText();
+// WorkWithXml();
 
 static void WorkWithText()
 {
-    string textFile = Combine(CurrentDirectory, "streams.txt");
-    StreamWriter text = File.CreateText(textFile);
-    foreach (string item in Viper.Callsigns)
+    StreamWriter text = null;
+    try
     {
-        text.WriteLine(item);
-    }
-    text.Close(); //releases the resource and **flushes**
+        string textFile = Combine(CurrentDirectory, "streams.txt");
+        text = File.CreateText(textFile);
+        foreach (string item in Viper.Callsigns)
+        {
+            text.WriteLine(item);
+        }
+        text.Close(); //releases the resource and **flushes**
 
-    WriteLine("{0} contains {1:N0} bytes",
-              textFile, new FileInfo(textFile).Length);
-    WriteLine(File.ReadAllText(textFile));
+        WriteLine("{0} contains {1:N0} bytes",
+                textFile, new FileInfo(textFile).Length);
+        WriteLine(File.ReadAllText(textFile));
+    }
+    catch (Exception ex)
+    {
+        WriteLine($"{ex.GetType()} says {ex.Message}");
+    }
+    finally
+    {
+        if (text is not null)
+        {
+            text.Dispose();
+            WriteLine("The file stream's unmanaged resources have been disposed.");
+        }
+    }
+
 }
 
 static void WorkWithXml()
