@@ -24,30 +24,54 @@ static void WorkWithText()
 
 static void WorkWithXml()
 {
-    // define file path to write to
-    string xmlFile = Combine(CurrentDirectory, "streams.xml");
-    // creates file stream (and, also file)
-    FileStream xmlFileStream = File.Create(xmlFile);
-    // warp the file stream in an XML writer helper and automatically
-    // indent nested elements
-    XmlWriter xml = XmlWriter.Create(xmlFileStream,
-        new XmlWriterSettings { Indent = true });
-
-    xml.WriteStartDocument();
-    xml.WriteStartElement("callsigns");
-    foreach (string callsing in Viper.Callsigns)
+    FileStream? xmlFileStream = null;
+    XmlWriter? xml = null;
+    try
     {
-        xml.WriteElementString("callsign", callsing);
-    }
-    xml.WriteEndElement();
-    // WARNING: closing helper doesn't close the file stream, apparently
-    xml.Close();
-    xmlFileStream.Close();
+        // define file path to write to
+        string xmlFile = Combine(CurrentDirectory, "streams.xml");
+        // creates file stream (and, also file)
+        xmlFileStream = File.Create(xmlFile);
+        // warp the file stream in an XML writer helper and automatically
+        // indent nested elements
+        xml = XmlWriter.Create(xmlFileStream,
+            new XmlWriterSettings { Indent = true });
 
-    WriteLine("{0} contains {1:N0} bytes.",
-        xmlFile,
-        new FileInfo(xmlFile).Length);
-    WriteLine(File.ReadAllText(xmlFile));
+        xml.WriteStartDocument();
+        xml.WriteStartElement("callsigns");
+        foreach (string callsing in Viper.Callsigns)
+        {
+            xml.WriteElementString("callsign", callsing);
+        }
+        xml.WriteEndElement();
+        // WARNING: closing helper doesn't close the file stream, apparently
+        xml.Close();
+        xmlFileStream.Close();
+
+        WriteLine("{0} contains {1:N0} bytes.",
+            xmlFile,
+            new FileInfo(xmlFile).Length);
+        WriteLine(File.ReadAllText(xmlFile));
+    }
+    catch (Exception ex)
+    {
+        WriteLine($"{ex.GetType()} says {ex.Message}");
+    }
+    finally
+    {
+
+        if (xml is not null)
+        {
+            xml.Dispose();
+            WriteLine("The XML writer's unmanaged resources have been disposed.");
+            if (xmlFileStream is not null)
+            {
+                xmlFileStream.Dispose();
+                WriteLine("The file stream's unmanaged resources have been disposed.");
+            }
+        }
+    }
+
 }
 
 static class Viper
