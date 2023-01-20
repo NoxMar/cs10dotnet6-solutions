@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization; // XmlSerializer
 using Packt.Shared; // Person
+using NewJson = System.Text.Json.JsonSerializer;
 
 using static System.Console;
 using static System.Environment;
@@ -53,6 +54,33 @@ WriteLine(File.ReadAllText(path));
 using (FileStream xmlLoad = File.Open(path, FileMode.Open))
 {
     List<Person>? loadedPeople = xs.Deserialize(xmlLoad) as List<Person>;
+    if (loadedPeople is not null)
+    {
+        foreach (Person p in loadedPeople)
+        {
+            WriteLine($"{p.LastName} has {p.Children?.Count ?? 0} children.");
+        }
+    }
+}
+
+string jsonPath = Combine(CurrentDirectory, "people.json");
+using (StreamWriter jsonStream = File.CreateText(jsonPath))
+{
+    Newtonsoft.Json.JsonSerializer jss = new();
+    jss.Serialize(jsonStream, people);
+}
+WriteLine();
+WriteLine("Written {0:N0} bytes of JSON to: {1}",
+    new FileInfo(jsonPath).Length,
+    jsonPath);
+
+WriteLine(File.ReadAllText(jsonPath));
+
+using (FileStream jsonLoad = File.Open(jsonPath, FileMode.Open))
+{
+    List<Person>? loadedPeople = await NewJson.DeserializeAsync(
+        utf8Json: jsonLoad,
+        returnType: typeof(List<Person>)) as List<Person>;
     if (loadedPeople is not null)
     {
         foreach (Person p in loadedPeople)
