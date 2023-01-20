@@ -6,8 +6,9 @@ using static System.Environment;
 using static System.IO.Path;
 
 // WorkWithText();
-WorkWithXml();
+// WorkWithXml();
 WorkingWithCompression();
+WorkingWithCompression(useBrotli: false);
 
 static void WorkWithText()
 {
@@ -93,11 +94,16 @@ static void WorkWithXml()
 
 }
 
-void WorkingWithCompression(string fileExtension = "gzip")
+void WorkingWithCompression(bool useBrotli = true)
 {
+    string fileExtension = useBrotli ? "brotli" : "gzip";
     string filePath = Combine(CurrentDirectory, $"streams.{fileExtension}");
     using FileStream fileToWrite = File.Create(filePath);
-    Stream compressor = new GZipStream(fileToWrite, CompressionMode.Compress);
+    Stream compressor = useBrotli switch
+    {
+        true => new BrotliStream(fileToWrite, CompressionMode.Compress),
+        false => new GZipStream(fileToWrite, CompressionMode.Compress),
+    };
     using (compressor)
     {
         using XmlWriter xml = XmlWriter.Create(compressor);
@@ -119,7 +125,11 @@ void WorkingWithCompression(string fileExtension = "gzip")
     // reading while transparently decompressing
     WriteLine("Reading the compressed XML file:");
     using Stream fileToRead = File.Open(filePath, FileMode.Open);
-    using Stream decompressor = new GZipStream(fileToRead, CompressionMode.Decompress);
+    using Stream decompressor = useBrotli switch
+    {
+        true => new BrotliStream(fileToRead, CompressionMode.Decompress),
+        false => new GZipStream(fileToRead, CompressionMode.Decompress),
+    };
     using XmlReader reader = XmlReader.Create(decompressor);
     while (reader.Read()) // reads next XML node
     {
