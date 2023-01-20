@@ -49,3 +49,15 @@ WriteLine("Written {0:N0} bytes of XML to {1}",
 WriteLine();
 
 WriteLine(File.ReadAllText(path));
+
+using (FileStream xmlLoad = File.Open(path, FileMode.Open))
+{
+    List<Person>? loadedPeople = xs.Deserialize(xmlLoad) as List<Person>;
+    if (loadedPeople is not null)
+    {
+        foreach (Person p in loadedPeople)
+        {
+            WriteLine($"{p.LastName} has {p.Children?.Count ?? 0} children.");
+        }
+    }
+}
