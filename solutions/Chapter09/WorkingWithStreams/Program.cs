@@ -1,11 +1,13 @@
 ﻿using System.Xml;
+using System.IO.Compression;
 
 using static System.Console;
 using static System.Environment;
 using static System.IO.Path;
 
-WorkWithText();
-// WorkWithXml();
+// WorkWithText();
+WorkWithXml();
+WorkingWithCompression();
 
 static void WorkWithText()
 {
@@ -89,6 +91,44 @@ static void WorkWithXml()
         }
     }
 
+}
+
+void WorkingWithCompression(string fileExtension = "gzip")
+{
+    string filePath = Combine(CurrentDirectory, $"streams.{fileExtension}");
+    using FileStream fileToWrite = File.Create(filePath);
+    Stream compressor = new GZipStream(fileToWrite, CompressionMode.Compress);
+    using (compressor)
+    {
+        using XmlWriter xml = XmlWriter.Create(compressor);
+        xml.WriteStartDocument();
+        xml.WriteStartElement("callsigns");
+        foreach (string callsign in Viper.Callsigns)
+        {
+            xml.WriteElementString("callsign", callsign);
+        }
+        // NOTE: disposing of XMLWriter at the end of this block automatically
+        // closes all open tags, if any, on all nesting levels.
+    }
+
+    WriteLine("{0} contains {1:N0} bytes.",
+        filePath, new FileInfo(filePath).Length);
+    WriteLine("The compressed contents:");
+    WriteLine(File.ReadAllText(filePath));
+
+    // reading while transparently decompressing
+    WriteLine("Reading the compressed XML file:");
+    using Stream fileToRead = File.Open(filePath, FileMode.Open);
+    using Stream decompressor = new GZipStream(fileToRead, CompressionMode.Decompress);
+    using XmlReader reader = XmlReader.Create(decompressor);
+    while (reader.Read()) // reads next XML node
+    {
+        if (reader.NodeType == XmlNodeType.Element && reader.Name == "callsign")
+        {
+            reader.Read(); // moves to text inside the element
+            WriteLine(reader.Value);
+        }
+    }
 }
 
 static class Viper
