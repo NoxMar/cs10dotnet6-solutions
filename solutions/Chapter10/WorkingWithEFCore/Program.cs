@@ -6,7 +6,8 @@ using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
 //QueryingCategories();
-FilteredIncludes();
+//FilteredIncludes();
+QueryingProducts();
 
 static void QueryingCategories()
 {
@@ -50,5 +51,39 @@ static void FilteredIncludes()
         {
             WriteLine($"   {p.ProductName} has {p.Stock} units in stock.");
         }
+    }
+}
+
+static void QueryingProducts()
+{
+    using Northwind db = new();
+
+    WriteLine("Products that cost more than a price, highest at top.");
+    string? input;
+    decimal price;
+    do
+    {
+        Write("Enter a product price:");
+        input = ReadLine();
+    } while (!decimal.TryParse(input, out price));
+    Write("Enter a minimum for units in stock: ");
+
+    IQueryable<Product>? products = db.Products?
+        .Where(p => p.Cost > price)
+        .OrderByDescending(p => p.Cost);
+
+    if (products is null)
+    {
+        WriteLine("No products found");
+        return;
+    }
+    foreach (var p in products)
+    {
+        WriteLine(
+            "{0}: {1} costs {2:$#,##0.00} and has {3} in stock.",
+            p.ProductId,
+            p.ProductName,
+            p.Cost,
+            p.Stock);
     }
 }
