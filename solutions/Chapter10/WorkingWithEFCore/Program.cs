@@ -6,8 +6,8 @@ using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
 //QueryingCategories();
-//FilteredIncludes();
-QueryingProducts();
+FilteredIncludes();
+//QueryingProducts();
 
 static void QueryingCategories()
 {
@@ -43,6 +43,7 @@ static void FilteredIncludes()
         return;
     }
 
+    WriteLine($"ToQueryString: {categories.ToQueryString()}");
     // execute query and enumerate results
     foreach (Category c in categories)
     {
