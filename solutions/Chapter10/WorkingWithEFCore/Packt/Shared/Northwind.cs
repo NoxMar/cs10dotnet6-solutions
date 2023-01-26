@@ -46,5 +46,9 @@ public class Northwind : DbContext
               .Property(product => product.Cost)
               .HasConversion<double>();
         }
+
+        // global filter to remove discontinued products
+        modelBuilder.Entity<Product>()
+            .HasQueryFilter(p => !p.Discontinued);
     }
 }
