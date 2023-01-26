@@ -9,9 +9,9 @@ using Packt.Shared;
 using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
-//QueryingCategories();
+QueryingCategories();
 //FilteredIncludes();
-QueryingProducts();
+//QueryingProducts();
 
 static void QueryingCategories()
 {

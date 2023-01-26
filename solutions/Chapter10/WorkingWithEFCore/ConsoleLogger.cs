@@ -48,6 +48,10 @@ public class ConsoleLogger : ILogger
         EventId eventId, TState state, Exception? exception,
         Func<TState, Exception, string> formatter)
     {
+        if (eventId != 20100)
+        {
+            return;
+        }
         // log the level and event identifier
         Write($"Level: {logLevel}, Event Id: {eventId.Id}");
         // only output the state or exception if it exists
