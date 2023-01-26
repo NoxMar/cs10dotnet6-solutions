@@ -9,9 +9,10 @@ using Packt.Shared;
 using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
-QueryingCategories();
+//QueryingCategories();
 //FilteredIncludes();
 //QueryingProducts();
+QueryingWithLike();
 
 static void QueryingCategories()
 {
@@ -93,5 +94,32 @@ static void QueryingProducts()
             p.ProductName,
             p.Cost,
             p.Stock);
+    }
+}
+
+static void QueryingWithLike()
+{
+    using Northwind db = new();
+
+    ILoggerFactory loggerFactory = db.GetService<ILoggerFactory>();
+    loggerFactory.AddProvider(new ConsoleLoggerProvider());
+
+    Write("Enter part of a product name: ");
+    string input = ReadLine()!;
+
+    IQueryable<Product>? products = db.Products?
+        .Where(p => EF.Functions.Like(p.ProductName, $"%{input}%"));
+    if (products is null)
+    {
+        WriteLine("No products found.");
+        return;
+    }
+
+    foreach (Product p in products)
+    {
+        WriteLine("{0} has {1} units in stock. Discontinued? {2}",
+            p.ProductName,
+            p.Stock,
+            p.Discontinued);
     }
 }
