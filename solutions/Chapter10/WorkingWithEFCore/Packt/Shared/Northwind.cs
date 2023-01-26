@@ -13,6 +13,7 @@ public class Northwind : DbContext
     protected override void OnConfiguring(
         DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseLazyLoadingProxies();
         if (ProjectConstants.DatabaseProvider == "SQLite")
         {
             string path = Path.Combine(

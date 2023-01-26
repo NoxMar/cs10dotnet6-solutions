@@ -9,10 +9,10 @@ using Packt.Shared;
 using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
-//QueryingCategories();
+QueryingCategories();
 //FilteredIncludes();
 //QueryingProducts();
-QueryingWithLike();
+//QueryingWithLike();
 
 static void QueryingCategories()
 {
@@ -20,8 +20,8 @@ static void QueryingCategories()
     ILoggerFactory loggerFactory = db.GetService<ILoggerFactory>();
     loggerFactory.AddProvider(new ConsoleLoggerProvider());
     WriteLine("Categories and how many products they have:");
-    IQueryable<Category>? categories = db.Categories?
-        .Include(c => c.Products);
+    IQueryable<Category>? categories = db.Categories;
+    //.Include(c => c.Products);
     if (categories is null)
     {
         WriteLine("No categories found.");
