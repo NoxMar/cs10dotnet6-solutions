@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.ChangeTracking; // CollectionTracking
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Storage; // IDbContextTransaction
 
 using Packt.Shared;
 
@@ -211,6 +212,8 @@ static bool IncreaseProductPrice(
 static int DeleteProducts(string productNameStartsWith)
 {
     using Northwind db = new();
+    using IDbContextTransaction t = db.Database.BeginTransaction();
+    WriteLine($"Transaction isolation level: {t.GetDbTransaction().IsolationLevel}");
     IQueryable<Product>? products = db.Products?
         .Where(p => p.ProductName.StartsWith(productNameStartsWith));
 
@@ -221,5 +224,7 @@ static int DeleteProducts(string productNameStartsWith)
     }
 
     db.Products!.RemoveRange(products);
-    return db.SaveChanges();
+    int affectedRows = db.SaveChanges();
+    t.Commit();
+    return affectedRows;
 }
