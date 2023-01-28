@@ -9,10 +9,15 @@ using Packt.Shared;
 using static System.Console;
 
 WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
-QueryingCategories();
-//FilteredIncludes();
-//QueryingProducts();
-//QueryingWithLike();
+// QueryingCategories();
+// FilteredIncludes();
+// QueryingProducts();
+// QueryingWithLike();
+if (AddProduct(categoryId: 6, productName: "Bob's Burgers", price: 500M))
+{
+    WriteLine("Add product successful.");
+}
+ListProducts();
 
 static void QueryingCategories()
 {
@@ -150,5 +155,36 @@ static void QueryingWithLike()
             p.ProductName,
             p.Stock,
             p.Discontinued);
+    }
+}
+
+static bool AddProduct(
+    int categoryId, string productName, decimal? price)
+{
+    using Northwind db = new();
+    Product p = new()
+    {
+        CategoryId = categoryId,
+        ProductName = productName,
+        Cost = price
+    };
+    // mark product as added in change tracking
+    db.Products!.Add(p);
+    // save tracked change to database
+    int affectedRows = db.SaveChanges();
+    return (affectedRows == 1);
+}
+
+static void ListProducts()
+{
+    using Northwind db = new();
+    WriteLine("{0,-3} {1,-35} {2,8} {3,5} {4}",
+        "Id", "Product Name", "Cost", "Stock", "Disc.");
+
+    foreach (var p in db.Products!
+        .OrderByDescending(p => p.Cost))
+    {
+        WriteLine("{0:000} {1,-35} {2,8:$#,##0.00} {3,5} {4}",
+            p.ProductId, p.ProductName, p.Cost, p.Stock, p.Discontinued);
     }
 }
