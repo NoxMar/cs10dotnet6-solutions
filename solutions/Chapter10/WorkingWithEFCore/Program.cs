@@ -13,9 +13,13 @@ WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
 // FilteredIncludes();
 // QueryingProducts();
 // QueryingWithLike();
-if (AddProduct(categoryId: 6, productName: "Bob's Burgers", price: 500M))
+// if (AddProduct(categoryId: 6, productName: "Bob's Burgers", price: 500M))
+// {
+//     WriteLine("Add product successful.");
+// }
+if (IncreaseProductPrice(productNameStartsWith: "Bob", amount: 20M))
 {
-    WriteLine("Add product successful.");
+    WriteLine("Update product price successful.");
 }
 ListProducts();
 
@@ -187,4 +191,17 @@ static void ListProducts()
         WriteLine("{0:000} {1,-35} {2,8:$#,##0.00} {3,5} {4}",
             p.ProductId, p.ProductName, p.Cost, p.Stock, p.Discontinued);
     }
+}
+
+static bool IncreaseProductPrice(
+    string productNameStartsWith, decimal amount
+)
+{
+    using Northwind db = new();
+    Product productToUpdate = db.Products!
+        .First(p => p.ProductName.StartsWith(productNameStartsWith));
+
+    productToUpdate.Cost += amount;
+    int affectedRows = db.SaveChanges();
+    return affectedRows == 1;
 }
