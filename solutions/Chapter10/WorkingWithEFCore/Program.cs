@@ -17,11 +17,13 @@ WriteLine($"Using {ProjectConstants.DatabaseProvider} databse provider.");
 // {
 //     WriteLine("Add product successful.");
 // }
-if (IncreaseProductPrice(productNameStartsWith: "Bob", amount: 20M))
-{
-    WriteLine("Update product price successful.");
-}
-ListProducts();
+// if (IncreaseProductPrice(productNameStartsWith: "Bob", amount: 20M))
+// {
+//     WriteLine("Update product price successful.");
+// }
+// ListProducts();
+int deletedRows = DeleteProducts(productNameStartsWith: "Bob");
+WriteLine($"{deletedRows} product(s) were deleted.");
 
 static void QueryingCategories()
 {
@@ -204,4 +206,20 @@ static bool IncreaseProductPrice(
     productToUpdate.Cost += amount;
     int affectedRows = db.SaveChanges();
     return affectedRows == 1;
+}
+
+static int DeleteProducts(string productNameStartsWith)
+{
+    using Northwind db = new();
+    IQueryable<Product>? products = db.Products?
+        .Where(p => p.ProductName.StartsWith(productNameStartsWith));
+
+    if (products is null)
+    {
+        WriteLine("No products found to delete.");
+        return 0;
+    }
+
+    db.Products!.RemoveRange(products);
+    return db.SaveChanges();
 }
