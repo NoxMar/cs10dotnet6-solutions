@@ -23,3 +23,16 @@ foreach (string name in query1)
     names[2] = "Jimmy"; // change Jim to Jimmy to show that finding next element is deferred
     // by changing before the second iteration and showing that original "Jim" is not returned.
 }
+
+WriteLine("Writing queries:");
+// With explicit delegate instantiation:
+// var query = names.Where(new Func<string, bool>(NameLongerThanFour));
+
+var query = names.Where(NameLongerThanFour);
+
+foreach (string item in query)
+{
+    WriteLine(item);
+}
+
+static bool NameLongerThanFour(string name) => name.Length > 4;
