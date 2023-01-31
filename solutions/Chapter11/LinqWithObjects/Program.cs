@@ -28,7 +28,7 @@ WriteLine("Writing queries:");
 // With explicit delegate instantiation:
 // var query = names.Where(new Func<string, bool>(NameLongerThanFour));
 
-var query = names
+IOrderedEnumerable<string> query = names
     .Where(name => name.Length > 4)
     .OrderBy(name => name.Length)
     .ThenBy(name => name);
