@@ -37,3 +37,23 @@ foreach (string item in query)
 {
     WriteLine(item);
 }
+
+WriteLine("Filtering by type:");
+List<Exception> exceptions = new()
+{
+    new ArgumentException(),
+    new SystemException(),
+    new IndexOutOfRangeException(),
+    new InvalidOperationException(),
+    new NullReferenceException(),
+    new InvalidCastException(),
+    new OverflowException(),
+    new DivideByZeroException(),
+    new ApplicationException(),
+};
+
+var arithmeticExceptionsQuery = exceptions.OfType<ArithmeticException>();
+foreach (ArithmeticException exception in arithmeticExceptionsQuery)
+{
+    WriteLine(exception);
+}
