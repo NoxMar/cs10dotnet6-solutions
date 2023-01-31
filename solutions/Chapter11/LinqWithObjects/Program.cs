@@ -28,11 +28,9 @@ WriteLine("Writing queries:");
 // With explicit delegate instantiation:
 // var query = names.Where(new Func<string, bool>(NameLongerThanFour));
 
-var query = names.Where(NameLongerThanFour);
+var query = names.Where(name => name.Length > 4);
 
 foreach (string item in query)
 {
     WriteLine(item);
 }
-
-static bool NameLongerThanFour(string name) => name.Length > 4;
