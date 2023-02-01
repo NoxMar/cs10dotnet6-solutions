@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore; // DbSet<T>
 using static System.Console;
 
-FilterAndSort();
+// FilterAndSort();
+JoinCategoriesAndProducts();
 
 static void FilterAndSort()
 {
@@ -26,4 +27,21 @@ static void FilterAndSort()
             $"{p.ProductId}: {p.ProductName} costs {p.UnitPrice:$#,##0.00}");
     }
     WriteLine();
+}
+
+static void JoinCategoriesAndProducts()
+{
+    using Northwind db = new();
+    var queryJoin = db.Categories.Join(
+        inner: db.Products,
+        outerKeySelector: category => category.CategoryId,
+        innerKeySelector: product => product.CategoryId,
+        resultSelector: (c, p) =>
+            new { c.CategoryName, p.ProductName, p.ProductId })
+        .OrderBy(cp => cp.CategoryName);
+    foreach (var item in queryJoin)
+    {
+        WriteLine(
+            $"{item.ProductId}: {item.ProductName} is in {item.CategoryName}");
+    }
 }
