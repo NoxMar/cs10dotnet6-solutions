@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore; // DbSet<T>
 using static System.Console;
 
 // FilterAndSort();
-JoinCategoriesAndProducts();
+// JoinCategoriesAndProducts();
+GroupJoinCategoriesAndProducts();
 
 static void FilterAndSort()
 {
@@ -43,5 +44,30 @@ static void JoinCategoriesAndProducts()
     {
         WriteLine(
             $"{item.ProductId}: {item.ProductName} is in {item.CategoryName}");
+    }
+}
+
+static void GroupJoinCategoriesAndProducts()
+{
+    using Northwind db = new();
+    var queryGroup = db.Categories.AsEnumerable().GroupJoin(
+        inner: db.Products,
+        outerKeySelector: category => category.CategoryId,
+        innerKeySelector: product => product.CategoryId,
+        resultSelector: (category, matchingProducts) => new
+        {
+            category.CategoryName,
+            Products = matchingProducts.OrderBy(p => p.ProductName)
+        });
+
+    foreach (var categoryProducts in queryGroup)
+    {
+        WriteLine("{0} has {1} product(s)",
+            categoryProducts.CategoryName,
+            categoryProducts.Products.Count());
+        foreach (var product in categoryProducts.Products)
+        {
+            WriteLine($" {product.ProductName}");
+        }
     }
 }
