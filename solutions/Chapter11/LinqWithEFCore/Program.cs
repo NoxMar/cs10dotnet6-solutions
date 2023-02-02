@@ -1,11 +1,13 @@
 ﻿using Packt.Shared; // Northwind, Category, Product
+using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore; // DbSet<T>
 using static System.Console;
 
 // FilterAndSort();
 // JoinCategoriesAndProducts();
 // GroupJoinCategoriesAndProducts();
-AggregateProducts();
+// AggregateProducts();
+OutputProductsAsXml();
 
 static void FilterAndSort()
 {
@@ -92,4 +94,19 @@ static void AggregateProducts()
     WriteLine("{0,-25} {1,10:$#,##0.00}",
         "Value of units in stock:",
         db.Products!.Sum(p => p.UnitsInStock * p.UnitPrice));
+}
+
+static void OutputProductsAsXml()
+{
+    using Northwind db = new();
+    Product[] productsArray = db.Products.ToArray();
+    XElement xml = new("products",
+        from p in productsArray
+        select new XElement("product",
+            new XAttribute("id", p.ProductId),
+            new XAttribute("price", p.UnitPrice),
+            new XElement("name", p.ProductName)
+        )
+    );
+    WriteLine(xml.ToString());
 }
