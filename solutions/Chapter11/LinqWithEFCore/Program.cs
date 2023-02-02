@@ -3,19 +3,20 @@ using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore; // DbSet<T>
 using static System.Console;
 
-// FilterAndSort();
+FilterAndSort();
 // JoinCategoriesAndProducts();
 // GroupJoinCategoriesAndProducts();
 // AggregateProducts();
 // OutputProductsAsXml();
-ProcessSettings();
+// ProcessSettings();
 
 static void FilterAndSort()
 {
     using Northwind db = new();
     DbSet<Product> allProducts = db.Products!;
+    IQueryable<Product> processedProducts = allProducts.ProcessSequence();
     IQueryable<Product> filteredProduct =
-        allProducts.Where(product => product.UnitPrice < 10M);
+        processedProducts.Where(product => product.UnitPrice < 10M);
     IOrderedQueryable<Product> sortedAndFilteredProducts =
         filteredProduct.OrderByDescending(product => product.UnitPrice);
     var projectedProducts = sortedAndFilteredProducts
