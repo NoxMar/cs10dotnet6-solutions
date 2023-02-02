@@ -3,12 +3,13 @@ using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore; // DbSet<T>
 using static System.Console;
 
-FilterAndSort();
+// FilterAndSort();
 // JoinCategoriesAndProducts();
 // GroupJoinCategoriesAndProducts();
 // AggregateProducts();
 // OutputProductsAsXml();
 // ProcessSettings();
+CustomExtensionsMethods();
 
 static void FilterAndSort()
 {
@@ -127,4 +128,21 @@ static void ProcessSettings()
     {
         WriteLine($"{item.Key}: {item.Value}");
     }
+}
+
+static void CustomExtensionsMethods()
+{
+    using Northwind db = new();
+    WriteLine("Mean units in stock: {0:N0}",
+        db.Products!.Average(p => p.UnitsInStock));
+    WriteLine("Mean unit price: {0:$#,##0.00}",
+        db.Products!.Average(p => p.UnitPrice));
+    WriteLine("Median units in stock: {0:N0}",
+        db.Products!.Median(p => p.UnitsInStock));
+    WriteLine("Median unit price: {0:$#,##0.00}",
+        db.Products!.Median(p => p.UnitPrice));
+    WriteLine("Mode units in stock: {0:N0}",
+        db.Products!.Mode(p => p.UnitsInStock));
+    WriteLine("Mode unit price: {0:$#,##0.00}",
+        db.Products!.Mode(p => p.UnitPrice));
 }
