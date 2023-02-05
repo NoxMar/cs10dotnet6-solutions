@@ -7,7 +7,11 @@ Exercise2();
 static void Exercise2()
 {
     using NorthwindContext db = new();
-    var city = ReadCity();
+    var city = ReadCity(db);
+    if (city is null)
+    {
+        return;
+    }
     var customersInCity = db.Customers
         .Where(c => c.City == city);
     if (customersInCity is null)
@@ -16,15 +20,22 @@ static void Exercise2()
         return;
     }
 
-    WriteLine($"There are {customersInCity.Count()} customers in {city}:");
+    WriteLine($"There are {customersInCity.Count()} customers in {city}.");
     foreach (var c in customersInCity)
     {
         WriteLine(c.CompanyName);
     }
 }
 
-static string ReadCity()
+static string? ReadCity(NorthwindContext db)
 {
+    var cities = db.Customers.Select(c => c.City).Distinct();
+    if (cities is null)
+    {
+        return null;
+    }
+    WriteLine("Cities with at least one customer:");
+    WriteLine(String.Join(", ", cities));
     Write("Enter the name of a city: ");
     return ReadLine()!;
 }
