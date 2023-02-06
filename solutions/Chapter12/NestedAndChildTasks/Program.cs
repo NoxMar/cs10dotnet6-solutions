@@ -7,7 +7,8 @@ WriteLine("Console app is stopping.");
 static void OuterMethod()
 {
     WriteLine("Outer method starting...");
-    Task innerTask = Task.Factory.StartNew(InnerMethod);
+    Task innerTask = Task.Factory.StartNew(InnerMethod,
+        TaskCreationOptions.AttachedToParent);
     WriteLine("Outer task finished");
 }
 
