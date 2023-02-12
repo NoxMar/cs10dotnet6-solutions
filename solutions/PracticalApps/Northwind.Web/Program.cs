@@ -1,14 +1,9 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Northwind.Web; // Startup
 
-app.UseHttpsRedirection();
-
-app.MapGet("/", () => "Hello World!");
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHsts();
-}
-
-app.Run();
-Console.WriteLine("This executes after the web server has stopped!");
+Host.CreateDefaultBuilder(args)
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.UseStartup<Startup>();
+    })
+    .Build()
+    .Run();
