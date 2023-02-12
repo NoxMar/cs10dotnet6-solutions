@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.EntityModels.Sqlite", "Northwind.Common.EntityModels.Sqlite\Northwind.Common.EntityModels.Sqlite.csproj", "{43671A31-FCEA-48E6-B6CF-0C6FD0DB3D7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.DataContext.Sqlite", "Northwind.Common.DataContext.Sqlite\Northwind.Common.DataContext.Sqlite.csproj", "{4FCFEF83-108A-4E66-A98F-2B674921558E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{43671A31-FCEA-48E6-B6CF-0C6FD0DB3D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43671A31-FCEA-48E6-B6CF-0C6FD0DB3D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43671A31-FCEA-48E6-B6CF-0C6FD0DB3D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
