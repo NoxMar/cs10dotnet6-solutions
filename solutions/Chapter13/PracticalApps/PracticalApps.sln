@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.EntityMode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.DataContext.Sqlite", "Northwind.Common.DataContext.Sqlite\Northwind.Common.DataContext.Sqlite.csproj", "{4FCFEF83-108A-4E66-A98F-2B674921558E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{BF098AF5-03BA-4783-B641-06F2CDD568D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FCFEF83-108A-4E66-A98F-2B674921558E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF098AF5-03BA-4783-B641-06F2CDD568D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF098AF5-03BA-4783-B641-06F2CDD568D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF098AF5-03BA-4783-B641-06F2CDD568D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF098AF5-03BA-4783-B641-06F2CDD568D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
