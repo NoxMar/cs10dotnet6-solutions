@@ -1,16 +1,22 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Packt.Shared; // NorthwindContext
 
 namespace Northwind.Web.Pages;
 
 public class SuppliersModel : PageModel
 {
-    public IEnumerable<string>? Suppliers { get; set; }
+    private NorthwindContext _db;
+    public IEnumerable<Supplier>? Suppliers { get; set; }
+
+    public SuppliersModel(NorthwindContext injectedContext)
+    {
+        _db = injectedContext;
+    }
     public void OnGet()
     {
         ViewData["Title"] = "Northwind B2B - Suppliers";
-        Suppliers = new[]
-        {
-            "Alpha Co", "Beta Limited", "Gamma Corp"
-        };
+        Suppliers = _db.Suppliers
+            .OrderBy(c => c.Country)
+            .ThenBy(c => c.CompanyName);
     }
 }
