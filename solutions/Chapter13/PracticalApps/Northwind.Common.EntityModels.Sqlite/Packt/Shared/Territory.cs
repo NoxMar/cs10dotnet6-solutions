@@ -9,11 +9,13 @@ namespace Packt.Shared
     [Keyless]
     public partial class Territory
     {
-        [Column(TypeName = "nvarchar] (20")]
+        [Column(TypeName = "nvarchar (20")]
+        [Required]
         public string TerritoryId { get; set; } = null!;
-        [Column(TypeName = "nchar] (50")]
+        [Column(TypeName = "nchar (50")]
+        [Required]
         public string TerritoryDescription { get; set; } = null!;
         [Column(TypeName = "INT")]
-        public long RegionId { get; set; }
+        public int RegionId { get; set; }
     }
 }

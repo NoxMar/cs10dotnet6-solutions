@@ -15,14 +15,14 @@ namespace Packt.Shared
     {
         [Key]
         [Column(TypeName = "INT")]
-        public long OrderId { get; set; }
+        public int OrderId { get; set; }
         [Key]
         [Column(TypeName = "INT")]
-        public long ProductId { get; set; }
+        public int ProductId { get; set; }
         [Column(TypeName = "money")]
-        public byte[] UnitPrice { get; set; } = null!;
+        public decimal UnitPrice { get; set; }
         [Column(TypeName = "smallint")]
-        public long Quantity { get; set; }
+        public short Quantity { get; set; }
         public double Discount { get; set; }
 
         [ForeignKey("OrderId")]

@@ -22,36 +22,44 @@ namespace Packt.Shared
         }
 
         [Key]
-        public long OrderId { get; set; }
-        [Column(TypeName = "nchar (5)")]
+        public int OrderId { get; set; }
+        [StringLength(5)]
+        [Column(TypeName = "nvarchar (5)")]
         public string? CustomerId { get; set; }
         [Column(TypeName = "INT")]
-        public long? EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         [Column(TypeName = "datetime")]
-        public byte[]? OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         [Column(TypeName = "datetime")]
-        public byte[]? RequiredDate { get; set; }
+        public DateTime? RequiredDate { get; set; }
         [Column(TypeName = "datetime")]
-        public byte[]? ShippedDate { get; set; }
+        public DateTime? ShippedDate { get; set; }
         [Column(TypeName = "INT")]
-        public long? ShipVia { get; set; }
+        public int? ShipVia { get; set; }
         [Column(TypeName = "money")]
-        public byte[]? Freight { get; set; }
+        public decimal? Freight { get; set; }
+        [StringLength(40)]
         [Column(TypeName = "nvarchar (40)")]
         public string? ShipName { get; set; }
+        [StringLength(60)]
         [Column(TypeName = "nvarchar (60)")]
         public string? ShipAddress { get; set; }
+        [StringLength(15)]
         [Column(TypeName = "nvarchar (15)")]
         public string? ShipCity { get; set; }
+        [StringLength(15)]
         [Column(TypeName = "nvarchar (15)")]
         public string? ShipRegion { get; set; }
+        [StringLength(10)]
         [Column(TypeName = "nvarchar (10)")]
         public string? ShipPostalCode { get; set; }
+        [StringLength(15)]
         [Column(TypeName = "nvarchar (15)")]
         public string? ShipCountry { get; set; }
 
         [ForeignKey("CustomerId")]
         [InverseProperty("Orders")]
+        [RegularExpression("[A-Z]{5}")]
         public virtual Customer? Customer { get; set; }
         [ForeignKey("EmployeeId")]
         [InverseProperty("Orders")]
