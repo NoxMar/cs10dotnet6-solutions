@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Northwind.Common.DataContext.Sqlite\Northwind.Common.DataContext.Sqlite.csproj" />
+      <ProjectReference Include="..\Northwind.Razor.Employees\Northwind.Razor.Employees.csproj" />
     </ItemGroup>
 
 </Project>
