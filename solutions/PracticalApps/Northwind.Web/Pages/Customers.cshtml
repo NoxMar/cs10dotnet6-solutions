@@ -27,7 +27,7 @@
             @foreach (var c in customerGroup.Customers)
             {
                 <tr>
-                    <th scope="row">@c.CustomerId</th>
+                    <th scope="row"><a href="/customer/@c.CustomerId" class="link-info">@c.CustomerId</a></th>
                     <td>@c.CompanyName</td>
                     <td>@c.ContactTitle</td>
                     <td>@c.ContactName</td>

@@ -1,19 +1,43 @@
-@page
-@model Northwind.Web.Pages.Customer
-
+@page "{id}"
+@model Northwind.Web.Pages.CustomerModel
 @{
-    Layout = null;
+    string title = $"Customer: {Model.Customer.CompanyName}";
+    ViewData["Title"] = $"Northwind B2B - {title}";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="row">
+    <h3>@Model.Customer.CompanyName</h3>
+    <h4>Contact Info</h4>
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th scope="row" class="text-secondary">Contact Title</th>
+            <td>@Model.Customer.ContactTitle</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">Contact Name</th>
+            <td>@Model.Customer.ContactName</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">City</th>
+            <td>@Model.Customer.City</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">Postal Code</th>
+            <td>@Model.Customer.PostalCode</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">Adress</th>
+            <td>@Model.Customer.Address</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">Phone</th>
+            <td>@Model.Customer.Phone</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-secondary">Fax</th>
+            <td>@Model.Customer.Fax</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-</body>
-</html>
