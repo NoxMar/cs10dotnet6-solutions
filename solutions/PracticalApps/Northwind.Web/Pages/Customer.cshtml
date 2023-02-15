@@ -40,4 +40,24 @@
         </tr>
         </tbody>
     </table>
+    <h4>Orders</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Shipped Date</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in @Model.Customer.Orders)
+            {
+                <tr>
+                    <th scope="row">@o.OrderId</th>
+                    <td>@o.OrderDate</td>
+                    <td>@o.ShippedDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
