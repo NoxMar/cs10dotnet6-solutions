@@ -1,0 +1,39 @@
+@page
+@model Northwind.Web.Pages.Customers
+@{
+    string title = "Customers";
+    ViewData["Title"] = $"Northwind B2B - {title}";
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Contact Title</th>
+        <th scope="col">Conteact Name</th>
+        <th scope="col">Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var customerGroup in Model.CustomersByCountry)
+        {
+            <tr>
+                <th colspan="4" class="text-center">
+                    <span class="text-secondary">@customerGroup.Country</span>
+                    <span class="position-absolute badge rounded-pill bg-secondary">@customerGroup.Customers.Count</span>
+                </th>
+            </tr>
+            @foreach (var c in customerGroup.Customers)
+            {
+                <tr>
+                    <th scope="row">@c.CustomerId</th>
+                    <td>@c.CompanyName</td>
+                    <td>@c.ContactTitle</td>
+                    <td>@c.ContactName</td>
+                    <td>@c.Phone</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
