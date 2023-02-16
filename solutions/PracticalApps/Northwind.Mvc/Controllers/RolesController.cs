@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity; // RoleManager, UserManager
 using Microsoft.AspNetCore.Mvc; // Controller, IActionResult
-using static System.Console;
 namespace Northwind.Mvc.Controllers;
 
 public class RolesController : Controller
@@ -9,11 +8,13 @@ public class RolesController : Controller
   private const string UserEmail = "test@example.com";
   private readonly RoleManager<IdentityRole> _roleManager;
   private readonly UserManager<IdentityUser> _userManager;
+  private readonly ILogger<RolesController> _logger;
   public RolesController(RoleManager<IdentityRole> roleManager,
-    UserManager<IdentityUser> userManager)
+    UserManager<IdentityUser> userManager, ILogger<RolesController> logger)
   {
     _roleManager = roleManager;
     _userManager = userManager;
+    _logger = logger;
   }
   public async Task<IActionResult> Index()
   {
@@ -31,13 +32,13 @@ public class RolesController : Controller
         user, "Pa$$w0rd");
       if (result.Succeeded)
       {
-        WriteLine($"User {user.UserName} created successfully.");
+        _logger.LogInformation("User {UserName} created successfully.", user.UserName);
       }
       else
       { 
         foreach (IdentityError error in result.Errors)
         {
-          WriteLine(error.Description);
+          _logger.LogError("Error occured while trying to create account:{Error}", error.Description);
         }
       }
     }
@@ -49,13 +50,13 @@ public class RolesController : Controller
         .ConfirmEmailAsync(user, token);
       if (result.Succeeded)
       {
-        WriteLine($"User {user.UserName} email confirmed successfully.");
+        _logger.LogInformation("User {UserName} email confirmed successfully.", user.UserName);
       }
       else
       {
         foreach (IdentityError error in result.Errors)
         {
-          WriteLine(error.Description);
+          _logger.LogError("Error occured while trying to confirm email:{Error}", error.Description);
         }
       }
     }
@@ -65,13 +66,13 @@ public class RolesController : Controller
         .AddToRoleAsync(user, AdminRole);
       if (result.Succeeded)
       {
-        WriteLine($"User {user.UserName} added to {AdminRole} successfully.");
+        _logger.LogInformation("User {UserName} added to {Role} successfully.", user.UserName, AdminRole);
       }
       else
       {
         foreach (IdentityError error in result.Errors)
         {
-          WriteLine(error.Description);
+          _logger.LogError("Error occured while trying to add user to a role:{Error}", error.Description);
         }
       }
     }
