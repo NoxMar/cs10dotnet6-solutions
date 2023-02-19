@@ -1,4 +1,4 @@
-@model Thing 
+@model HomeModelBindingViewModel 
 @{
     ViewData["Title"] = "Model Binding Demo";
 }
@@ -8,6 +8,7 @@
 </div>
 <form method="POST" action="/home/modelbinding?id=3">
     <input name="color" value="Red" />
+    <input name="email" value="test@example.com" />
     <input type="submit" />
 </form>
 @if (Model is not null)
@@ -16,10 +17,21 @@
     <hr />
     <div>
         <dl class="row">
-            <dt class="col-sm-3 text-md-end">Model.Id</dt>
-            <dd class="col-sm-9">@Model.Id</dd>
-            <dt class="col-sm-3 text-md-end">Model.Color</dt>
-            <dd class="col-sm-9">@Model.Color</dd>
+            <dt class="col-sm-3 text-md-end">Model.Thing.Id</dt>
+            <dd class="col-sm-9">@Model.Thing.Id</dd>
+            <dt class="col-sm-3 text-md-end">Model.Thing.Color</dt>
+            <dd class="col-sm-9">@Model.Thing.Color</dd>
+            <dt class="col-sm-3 text-md-end">Model.Thing.Email</dt>
+            <dd class="col-sm-9">@Model.Thing.Email</dd>
         </dl>
     </div>
+    @if (Model.HasErrors)
+    {
+        <div>
+            @foreach (var errorMessage in Model.ValidationErrors)
+            {
+                <div class="alert alert-danger" role="alert">@errorMessage</div>
+            }
+        </div>
+    }
 }

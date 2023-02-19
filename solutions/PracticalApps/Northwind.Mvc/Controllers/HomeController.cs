@@ -71,6 +71,13 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult ModelBinding(Thing thing)
     {
-        return View(thing); // show the model bound thing
+        HomeModelBindingViewModel model = new(
+            thing,
+            !ModelState.IsValid,
+            ModelState.Values
+                .SelectMany(state => state.Errors)
+                .Select(e => e.ErrorMessage)
+        );
+        return View(model); // show the model bound thing
     }
 }
