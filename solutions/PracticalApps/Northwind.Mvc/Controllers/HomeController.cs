@@ -19,7 +19,7 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any)]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         _logger.LogError("This is a serious error (not really!)");
         _logger.LogWarning("This is your first warning!");
@@ -27,8 +27,8 @@ public class HomeController : Controller
         _logger.LogInformation("Im in in the Index method of the HomeController.");
         HomeIndexViewModel model = new(
             VisitorCount: new Random().Next(1, 1001),
-            Categories: _db.Categories.ToList(),
-            Products: _db.Products.ToList()
+            Categories: await _db.Categories.ToListAsync(),
+            Products: await _db.Products.ToListAsync()
         );
         return View(model);
     }
@@ -46,14 +46,14 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult ProductDetail(int? id)
+    public async Task<IActionResult> ProductDetail(int? id)
     {
         if (!id.HasValue)
         {
             return BadRequest("You must pass a product ID to the route, for example, /Home/ProductDetail/21");
         }
 
-        var product  = _db.Products.SingleOrDefault(p => p.ProductId == id);
+        var product  = await _db.Products.SingleOrDefaultAsync(p => p.ProductId == id);
         if (product is null)
         {
             return NotFound($"ProductId {id} not found.");
