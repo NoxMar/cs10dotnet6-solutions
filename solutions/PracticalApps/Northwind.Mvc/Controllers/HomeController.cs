@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Packt.Shared;
 
 namespace Northwind.Mvc.Controllers;
@@ -79,4 +80,25 @@ public class HomeController : Controller
         );
         return View(model); // show the model bound thing
     }
+
+    public IActionResult ProductsThatCostMoreThan([FromQuery] decimal? price)
+    {
+        if (!price.HasValue)
+        {
+            return BadRequest(
+                "You must pass a product price in the query string, for example /Home/ProductsThatCostMoreThan?price=50");
+        }
+
+        var products = _db.Products
+            .Include(p => p.Category)
+            .Include(p => p.Supplier)
+            .Where(p => p.UnitPrice > price);
+        if (!products.Any())
+        {
+            return NotFound($"No products cost more than {price:C}");
+        }
+        ViewData["MaxPrice"] = price.Value.ToString("C");
+        return View(products);
+    }
+    
 }
