@@ -9,6 +9,7 @@
     <h1 class="display-4">Welcome</h1>
     <p class="alert alert-primary">@DateTime.Now.ToLongTimeString()</p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+      <p><a asp-action="ModelBinding" asp-controller="Home">Binding</a></p>
 </div>
 @if (Model is not null)
 {
@@ -42,7 +43,7 @@
         <h3>@Model.Categories[c].Description</h3>
         <p>
           <a class="btn btn-primary"  
-            href="/category/@Model.Categories[c].CategoryId">View</a>
+             href="/category/@Model.Categories[c].CategoryId">View</a>
         </p>
       </div>
     </div>
