@@ -45,4 +45,20 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    public IActionResult ProductDetail(int? id)
+    {
+        if (!id.HasValue)
+        {
+            return BadRequest("You must pass a product ID to the route, for example, /Home/ProductDetail/21");
+        }
+
+        var product  = _db.Products.SingleOrDefault(p => p.ProductId == id);
+        if (product is null)
+        {
+            return NotFound($"ProductId {id} not found.");
+        }
+
+        return View(product);
+    }
 }
