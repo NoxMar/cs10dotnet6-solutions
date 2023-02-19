@@ -61,4 +61,16 @@ public class HomeController : Controller
 
         return View(product);
     }
+
+    [HttpGet]
+    public IActionResult ModelBinding()
+    {
+        return View(); // the page to submit the form
+    }
+
+    [HttpPost]
+    public IActionResult ModelBinding(Thing thing)
+    {
+        return View(thing); // show the model bound thing
+    }
 }
