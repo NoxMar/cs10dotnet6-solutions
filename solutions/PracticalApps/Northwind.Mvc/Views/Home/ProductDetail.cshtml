@@ -6,16 +6,16 @@
 <h2>Product Detail</h2>
 <hr />
 <dv>
-    <dl class="dl-horizontal">
-        <dt>Product Id</dt>
-        <dd>@Model.ProductId</dd>
-        <dt>Prouct Name</dt>
-        <dd>@Model.ProductName</dd>
-        <dt>Category Id</dt>
-        <dd>@Model.CategoryId</dd>
-        <dt>Unit Price</dt>
-        <dd>@Model.UnitPrice.Value.ToString("C")</dd>
-        <dt>Units In Stock</dt>
-        <dd>@Model.UnitsInStock</dd>
+    <dl class="row">
+        <dt class="col-sm-3 text-md-end">Product Id</dt>
+        <dd class="col-sm-9">@Model.ProductId</dd>
+        <dt class="col-sm-3 text-md-end">Prouct Name</dt>
+        <dd class="col-sm-9">@Model.ProductName</dd>
+        <dt class="col-sm-3 text-md-end">Category Id</dt>
+        <dd class="col-sm-9">@Model.CategoryId</dd>
+        <dt class="col-sm-3 text-md-end">Unit Price</dt>
+        <dd class="col-sm-9">@Model.UnitPrice.Value.ToString("C")</dd>
+        <dt class="col-sm-3 text-md-end">Units In Stock</dt>
+        <dd class="col-sm-9">@Model.UnitsInStock</dd>
     </dl>
 </dv>
