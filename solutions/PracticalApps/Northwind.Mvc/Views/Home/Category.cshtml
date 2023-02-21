@@ -1,18 +1,33 @@
-@model TModel
-
+@model Packt.Shared.Category
 @{
-    Layout = null;
+    ViewData["Title"] = "Category Details - " + Model.CategoryName;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
+<h2>Product Detail</h2>
+<hr />
 <div>
-      
+    <dl class="row">
+        <dt class="col-sm-3 text-md-end">Category Id</dt>
+        <dd class="col-sm-9">@Model.CategoryId</dd>
+        <dt class="col-sm-3 text-md-end">Category Name</dt>
+        <dd class="col-sm-9">@Model.CategoryName</dd>
+        <dt class="col-sm-3 text-md-end">Products count</dt>
+        <dd class="col-sm-9">@Model.Products.Count</dd>
+    </dl>
 </div>
-</body>
-</html>
+<hr />
+@if (Model.Products.Count != 0)
+{
+    <h3>Proucts</h3>
+    <ul class="list">
+        @foreach (var product in Model.Products)
+        {
+            <li>@Html.ActionLink(
+                    linkText: $"{product.ProductName} {product.UnitPrice:C}",
+                    actionName: "ProductDetail",
+                    controllerName: "Home",
+                    routeValues: new {Id = product.ProductId}
+            )</li>
+        }
+    </ul>
+}

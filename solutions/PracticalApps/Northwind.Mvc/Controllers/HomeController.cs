@@ -100,5 +100,18 @@ public class HomeController : Controller
         ViewData["MaxPrice"] = price.Value.ToString("C");
         return View(products);
     }
+
+    [Route("/category/{id:int}")]
+    public async Task<IActionResult> Category([FromRoute] int id)
+    {
+        var category = await _db.Categories
+            .Include(c => c.Products)
+            .FirstOrDefaultAsync(c => c.CategoryId == id);
+        if (category is null)
+        {
+            return NotFound($"No product could be found for id: {id}");
+        }
+        return View(category);
+    }
     
 }
