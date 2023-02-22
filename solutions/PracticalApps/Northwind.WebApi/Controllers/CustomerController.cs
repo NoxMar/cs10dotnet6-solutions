@@ -58,4 +58,27 @@ public class CustomersController : ControllerBase
             value: addedCustomer
         );
     }
+    
+    // PUT: api/customers/[id]
+    // BODY: Customer (JSON, XML)
+    [HttpPut("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> Update(string id, [FromBody] Customer c)
+    {
+        if (c == null || c.CustomerId != id)
+        {
+            return BadRequest();
+        }
+
+        Customer? existing = await _repository.RetrieveAsync(id);
+        if (existing is null)
+        {
+            return NotFound();
+        }
+
+        await _repository.UpdateAsync(id, c);
+        return new NoContentResult();
+    }
 }
