@@ -23,4 +23,14 @@ public class CustomersController : ControllerBase
         var customers = await _repository.RetrieveAllAsync();
         return string.IsNullOrWhiteSpace(country) ? customers : customers.Where(c => c.Country == country);
     }
+
+    // GET: api/customers/[id]
+    [HttpGet("{id}", Name = nameof(GetCustomer))]
+    [ProducesResponseType(200, Type=typeof(Customer))]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> GetCustomer(string id)
+    {
+        var c = await _repository.RetrieveAsync(id);
+        return c is not null ? Ok(c) : NotFound(c);
+    }
 }
