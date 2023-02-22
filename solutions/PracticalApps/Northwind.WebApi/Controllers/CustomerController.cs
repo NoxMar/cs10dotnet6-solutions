@@ -33,4 +33,29 @@ public class CustomersController : ControllerBase
         var c = await _repository.RetrieveAsync(id);
         return c is not null ? Ok(c) : NotFound(c);
     }
+    
+    // POST: api/customers
+    // BODY: Customer (JSON, XML)
+    [HttpPost]
+    [ProducesResponseType(201, Type = typeof(Customer))]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> Create([FromBody] Customer c)
+    {
+        if (c is null)
+        {
+            return BadRequest();
+        }
+
+        var addedCustomer = await _repository.CreateAsync(c);
+        if (addedCustomer is null)
+        {
+            return BadRequest("Repository failed to create customer.");
+        }
+
+        return CreatedAtRoute( // 201 Created
+            routeName: nameof(GetCustomer),
+            routeValues: new {id = addedCustomer.CustomerId},
+            value: addedCustomer
+        );
+    }
 }
