@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Microsoft.EntityFrameworkCore;
 using Packt.Shared;
 
 namespace Northwind.WebApi.Repositories;
@@ -68,6 +69,11 @@ public class CustomerRepository : ICustomerRepository
     {
         // normalize customer Id
         id = id.ToUpper();
+        if (_customerCache is not null)
+        {
+            _customerCache.Remove(id, out var oldVal);
+            if (oldVal is not null) _db.Entry(oldVal).State = EntityState.Detached;
+        }
         c.CustomerId = c.CustomerId.ToUpper();
         // update database
         _db.Customers.Update(c);
