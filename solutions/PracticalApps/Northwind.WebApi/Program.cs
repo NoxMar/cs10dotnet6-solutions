@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Northwind.WebApi.Repositories;
 using Packt.Shared; // AddNorthwindContext extension method
+using Swashbuckle.AspNetCore.SwaggerUI; // SubmitMethod
 using static System.Console;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() {Title="Northwind Service API", Version = "v1"});
+    c.SwaggerDoc("v1", new() { Title = "Northwind Service API", Version = "v1" });
 });
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
@@ -40,7 +41,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Northwind Service API Version 1");
+        c.SupportedSubmitMethods(SubmitMethod.Get, SubmitMethod.Post, SubmitMethod.Put, SubmitMethod.Delete);
+    });
 }
 
 app.UseHttpsRedirection();
