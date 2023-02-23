@@ -114,6 +114,6 @@ public class CustomersController : ControllerBase
             return BadRequest( // 400 Bad request
                 $"Customer {id} was found but failed to delete");
         }
-        return BadRequest();
+        return new NoContentResult();
     }
 }
