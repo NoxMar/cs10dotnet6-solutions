@@ -30,6 +30,7 @@ builder.Services.AddControllers(options =>
     .AddXmlSerializerFormatters();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Northwind Service API", Version = "v1" });
@@ -57,6 +58,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+
+app.UseCors(configurePolicy: options =>
+{
+    options.WithMethods("GET", "POST", "PUT", "DELETE");
+    options.WithOrigins("https://localhost:5001");
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
