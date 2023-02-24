@@ -31,6 +31,8 @@ builder.Services.AddControllers(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<NorthwindContext>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Northwind Service API", Version = "v1" });
@@ -46,6 +48,8 @@ builder.Services.AddHttpLogging(options =>
 var app = builder.Build();
 
 app.UseHttpLogging();
+
+app.UseHealthChecks(path: "/howdoyoufeel");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
