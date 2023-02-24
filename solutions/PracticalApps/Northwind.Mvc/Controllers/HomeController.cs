@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +11,14 @@ namespace Northwind.Mvc.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IHttpClientFactory _clientFactory;
     private readonly NorthwindContext _db;
 
-    public HomeController(ILogger<HomeController> logger, NorthwindContext db)
+    public HomeController(ILogger<HomeController> logger, NorthwindContext db, IHttpClientFactory clientFactory)
     {
         _logger = logger;
         _db = db;
+        _clientFactory = clientFactory;
     }
 
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any)]
@@ -113,5 +116,30 @@ public class HomeController : Controller
         }
         return View(category);
     }
-    
+
+    public async Task<IActionResult> Customers(string country)
+    {
+        string uri;
+        if (string.IsNullOrEmpty(country))
+        {
+            ViewData["Title"] = "All Customers Worldwide";
+            uri = "api/customers/";
+        }
+        else
+        {
+            ViewData["Title"] = $"Customers in {country}";
+            uri = $"api/customers?country={country}";
+        }
+
+        HttpClient client = _clientFactory.CreateClient("Northwind.WebApi");
+        HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: uri);
+        HttpResponseMessage response = await client.SendAsync(request);
+        var model = await response.Content.ReadFromJsonAsync<IEnumerable<Customer>>();
+        if (model is null)
+        {
+            throw new Exception();
+        }
+
+        return View(model);
+    }
 }
