@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.HttpLogging; // HttpLoggingFields
 using static System.Console;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.UseUrls("https://localhost:5002/");
 // Add services to the container.
 builder.Services.AddNorthwindContext();
 builder.Services.AddControllers(options =>
