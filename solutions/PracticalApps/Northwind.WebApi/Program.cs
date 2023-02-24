@@ -3,6 +3,7 @@ using Northwind.WebApi.Repositories;
 using Packt.Shared; // AddNorthwindContext extension method
 using Swashbuckle.AspNetCore.SwaggerUI; // SubmitMethod
 using Microsoft.AspNetCore.HttpLogging; // HttpLoggingFields
+using Northwind.WebApi; // SecurityHeaders
 using static System.Console;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,6 +69,7 @@ app.UseCors(configurePolicy: options =>
     options.WithMethods("GET", "POST", "PUT", "DELETE");
     options.WithOrigins("https://localhost:5001");
 });
+app.UseMiddleware<SecurityHeaders>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
