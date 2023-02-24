@@ -63,7 +63,7 @@ public class CustomersController : ControllerBase
     // BODY: Customer (JSON, XML)
     [HttpPut("{id}")]
     [ProducesResponseType(204)]
-    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> Update(string id, [FromBody] Customer c)
     {
