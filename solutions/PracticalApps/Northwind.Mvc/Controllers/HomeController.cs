@@ -5,6 +5,7 @@ using Northwind.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Packt.Shared;
+using Northwind.Common;
 
 namespace Northwind.Mvc.Controllers;
 
@@ -33,6 +34,20 @@ public class HomeController : Controller
             Categories: await _db.Categories.ToListAsync(),
             Products: await _db.Products.ToListAsync()
         );
+
+        try
+        {
+            var client = _clientFactory.CreateClient("Minimal.WebApi");
+            HttpRequestMessage request = new(HttpMethod.Get, "api/weather");
+            var response = await client.SendAsync(request);
+            ViewData["weather"] = await response.Content
+                .ReadFromJsonAsync<WeatherForecast[]>();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning($"The Minimal.WebApi service is no longer responding. Exception: {ex.Message}");
+            ViewData["weather"] = Enumerable.Empty<WeatherForecast>().ToArray();
+        }
         return View(model);
     }
 

@@ -1,13 +1,33 @@
 ﻿@using Packt.Shared
+@using Northwind.Common
 @model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
-    string currentItem = string.Empty;
+  ViewData["Title"] = "Home Page";
+  string currentItem = string.Empty;
+  var weather = ViewData["weather"] as WeatherForecast[];
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p class="alert alert-primary">@DateTime.Now.ToLongTimeString()</p>
+  <p class="alert alert-primary">@DateTime.Now.ToLongTimeString()</p>
+  <p>
+    <h4>Five-Day Weather Forecast</h4>
+    @if (weather is null || !weather.Any())
+    {
+      <p>No weather forecasts found.</p>
+    }
+    else
+    {
+      <table class="table table-info">
+        <tr>
+          @foreach (var w in weather)
+          {
+            <td>@w.Date.ToString("ddd d MMM") will be @w.Summary</td>
+          }
+        </tr>
+      </table>
+    }
+  </p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
       <p><a asp-action="ModelBinding" asp-controller="Home">Binding</a></p>
 </div>
