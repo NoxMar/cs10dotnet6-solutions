@@ -1,8 +1,67 @@
+@using Microsoft.EntityFrameworkCore @* ToListAsync extension method *@
 @page "/customers/{country?}"
-
+@inject NorthwindContext Db
 <h3>Customers @(string.IsNullOrEmpty(Country) ? "Worldwide" : $"in {Country}")</h3>
+@if (_customers is null)
+{
+    <p><em>Loading</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th>Company Name</th>
+            <th>Adress</th>
+            <th>Phone</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var customer in _customers)
+        {
+            <tr>
+                <td>@customer.CustomerId</td>
+                <td>@customer.CompanyName</td>
+                <td>
+                    @customer.Address<br />
+                    @customer.City<br />
+                    @customer.PostalCode<br />
+                    @customer.Country
+                </td>
+                <td>@customer.Phone</td>
+                <td>
+                    <a class="btn btn-info" href="editcustomer/@customer.CustomerId">
+                        <i class="oi oi-pencil"></i>
+                    </a>
+                    <a class="btn btn-danger" href="deletecustomer/@customer.CustomerId">
+                        <i class="oi oi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>    
+}
 
 @code {
     [Parameter]
     public string? Country { get; set; }
+
+    private IEnumerable<Customer>? _customers;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Country))
+        {
+            _customers = await Db.Customers.ToListAsync();
+        }
+        else
+        {
+            _customers = await Db.Customers
+                .Where(c => c.Country == Country)
+                .ToListAsync();
+        }
+    }
 }

@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Northwind.BlazorServer.Data;
+using Packt.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddNorthwindContext();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
