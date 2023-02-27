@@ -1,6 +1,6 @@
-@using Microsoft.EntityFrameworkCore @* ToListAsync extension method *@
+@using Northwind.BlazorServer.Data 
 @page "/customers/{country?}"
-@inject NorthwindContext Db
+@inject INorthwindService _service;
 <h3>Customers @(string.IsNullOrEmpty(Country) ? "Worldwide" : $"in {Country}")</h3>
 @if (_customers is null)
 {
@@ -55,13 +55,11 @@ else
     {
         if (string.IsNullOrWhiteSpace(Country))
         {
-            _customers = await Db.Customers.ToListAsync();
+            _customers = await _service.GetCustomersAsync();
         }
         else
         {
-            _customers = await Db.Customers
-                .Where(c => c.Country == Country)
-                .ToListAsync();
+            _customers = await _service.GetCustomersAsync(Country);
         }
     }
 }

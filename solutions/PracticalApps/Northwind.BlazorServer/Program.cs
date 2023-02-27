@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddNorthwindContext();
+builder.Services.AddTransient<INorthwindService, NorthwindService>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
