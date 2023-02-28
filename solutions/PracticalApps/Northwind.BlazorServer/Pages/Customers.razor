@@ -2,6 +2,11 @@
 @page "/customers/{country?}"
 @inject INorthwindService _service;
 <h3>Customers @(string.IsNullOrEmpty(Country) ? "Worldwide" : $"in {Country}")</h3>
+<div class="input-group">
+    <a class="btn btn-info" href="createcustomer">
+        <i class="oi oi-plus"></i> Create New
+    </a>
+</div>
 @if (_customers is null)
 {
     <p><em>Loading</em></p>
