@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.EntityModels.Sqlite", "Northwind.Common.EntityModels.Sqlite\Northwind.Common.EntityModels.Sqlite.csproj", "{43671A31-FCEA-48E6-B6CF-0C6FD0DB3D7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Common.DataContext.Sqlite", "Northwind.Common.DataContext.Sqlite\Northwind.Common.DataContext.Sqlite.csproj", "{4FCFEF83-108A-4E66-A98F-2B674921558E}"
@@ -19,7 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimal.WebApi", "Minimal.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorServer", "Northwind.BlazorServer\Northwind.BlazorServer.csproj", "{0A6090B9-B423-4CF1-B377-417CCB586624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorWasm", "Northwind.BlazorWasm\Northwind.BlazorWasm.csproj", "{ADD5BFFD-7738-4949-B026-D0ED76D37889}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorWasm.Client", "Northwind.BlazorWasm\Client\Northwind.BlazorWasm.Client.csproj", "{318001C2-1653-4AC1-9620-5669B767512A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorWasm.Server", "Northwind.BlazorWasm\Server\Northwind.BlazorWasm.Server.csproj", "{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +65,13 @@ Global
 		{0A6090B9-B423-4CF1-B377-417CCB586624}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A6090B9-B423-4CF1-B377-417CCB586624}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A6090B9-B423-4CF1-B377-417CCB586624}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADD5BFFD-7738-4949-B026-D0ED76D37889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADD5BFFD-7738-4949-B026-D0ED76D37889}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADD5BFFD-7738-4949-B026-D0ED76D37889}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADD5BFFD-7738-4949-B026-D0ED76D37889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{318001C2-1653-4AC1-9620-5669B767512A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{318001C2-1653-4AC1-9620-5669B767512A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{318001C2-1653-4AC1-9620-5669B767512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{318001C2-1653-4AC1-9620-5669B767512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
