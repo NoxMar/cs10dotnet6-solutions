@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.ResponseCompression;
-
+using Packt.Shared;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddNorthwindContext(relativePath: Path.Combine("..", ".."));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
