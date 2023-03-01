@@ -1,0 +1,32 @@
+@page "/deletecustomer/{customerid}"
+@inject INorthwindService Service
+@inject NavigationManager Navigation
+<h3>Delete customer</h3>
+<div class="alert alert-danger">
+    Warning! This action cannot be undone!
+</div>
+<CustomerDetail ButtonText="Delete Customer"
+                ButtonStyle="danger"
+                Customer="@_customer"
+                OnValidSubmit="@Delete"/>
+@code {
+
+    [Parameter]
+    public string CustomerId { get; set; }
+
+    private Customer? _customer = new();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        _customer = await Service.GetCustomerAsync(CustomerId);
+    }
+
+    private async Task Delete()
+    {
+        if (_customer is not null)
+        {
+            await Service.DeleteCustomerAsync(CustomerId);
+        }
+        Navigation.NavigateTo("customers");
+    }
+}
