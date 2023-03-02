@@ -63,4 +63,13 @@ public class CustomersController : ControllerBase
         _db.Customers.Remove(c);
         return await _db.SaveChangesAsync();
     }
+
+    [HttpGet("countries")]
+    public async Task<IList<string?>> GetCustomerCountriesAsync()
+    {
+        return await _db.Customers
+            .Select(c => c.Country)
+            .Distinct()
+            .ToListAsync();
+    }
 }
