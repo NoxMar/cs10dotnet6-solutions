@@ -1,0 +1,28 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>*</th>
+        @for (int row = 1; row <= Number; row++)
+        {
+            <th>@row</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+        @for (int row = 1; row <= Number; row++)
+        {
+            <tr>
+                <th>@row</th>
+                @for (int col = 1; col <= Number; col++)
+                {
+                    <td>@(row*col)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public int Number { get; set; }
+}
