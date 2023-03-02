@@ -43,4 +43,9 @@ public class NorthwindService : INorthwindService
     {
         _ = await _http.DeleteAsync($"api/customers/{id}");
     }
+
+    public async Task<List<string>> GetCountriesAsync()
+    {
+        return await _http.GetFromJsonAsync<List<string>>("api/customers/countries") ?? new List<string>();
+    }
 }
