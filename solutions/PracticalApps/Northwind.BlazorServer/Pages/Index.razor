@@ -7,5 +7,34 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?"/>
-<Customers Country="Germany"/>
-<Customers />
+<button type="button" class="btn btn-info" @onclick="AlertBrowser">
+    Poke the browser
+</button>
+<hr />
+<input id="colorBox" />
+<button type="button" class="btn btn-info" @onclick="SetColor">
+    Set Color
+</button>
+<button type="button" class="btn btn-info" @onclick="GetColor">
+    Get Color
+</button>
+@code {
+
+    [Inject]
+    IJSRuntime JsRuntime { get; set; } = null;
+
+    public async Task AlertBrowser()
+    {
+        await JsRuntime.InvokeVoidAsync("messageBox", "Blazor poking the browser");
+    }
+
+    public async Task SetColor()
+    {
+        await JsRuntime.InvokeVoidAsync("setColorInStorage");
+    }
+
+    public async Task GetColor()
+    {
+        await JsRuntime.InvokeVoidAsync("getColorFromStorage");
+    }
+}
