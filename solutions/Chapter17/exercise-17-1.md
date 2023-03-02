@@ -1,53 +1,46 @@
-## Exercise 16.1 - Test your knowledge
+## Exercise 17.1 - Test your knowledge
 
-## 1. Which class should you inherit from to create a controller class for an ASP.NET Core Web API service?
+## 1. What are the two primary hosting models for Blazor, and how are they different?
 
-`ControlerBase` from `Microsoft.AspNetCore.Mvc`.
+- server-side Balzor which runs all of the code server-side and sends just the rendered output to the browser (via SignalR). This means that the server needs to keep connection with each client. That impacts scalability quite significantly.
 
-## 2. If you decorate your controller class with the `[ApiController]` attribute to get default behavior like automatic `400` responses for invalid models, what else must you do?
+- Blazor WASM which runs component code client-side (in client's browser) using WASM. That means that each time app needs access to some resource on the server it needs to make HTTP request as it runs in the browser. This, however, eliminates the need for SingalR connection to all clients thus improving scalability. 
 
-In versions older than .NET Core 3 compatibility version in the startup class by calling `SetCompatibilityVersion` on the MVC builder. In .NET Core 3+ it's a no-op. In .NET Core 6 it was even deprecated.
+## 2. In a Blazor Server website project, compared to an ASP.NET Core MVC website project, what extra configuration is required in the Startup class?
 
-## 3. What must you do to specify which controller action method will be executed in response to an HTTP request?
+`builder.Services.AddServerSideBlazor();` must be called when setting up services in the container.
 
-Annotate action (controller public method of an appropriate return type) with `[Http<Method>]` where `<Method>` is an HTTP method. Optionally route can be provided if it isn't identical to controller's route.
+Additionally`MapBlazorHub()` and `MapFallbackToPage()` must be called to add those components to the request pipeline.
 
-## 4. What must you do to specify which controller action method will be executed in response to an HTTP request?
+## 3. One of the benefits of Blazor is being able to implement client-side components using C# and .NET instead of JavaScript. Does a Blazor component need any JavaScript?
 
-This is done using `[ProducesResponseType(int statusCode, [Type Type])]` attribute.
+Part of the Blazor technology are files in JavaScript provided by Microsoft. Additionally, if a developer wants to interact with browser's APIs since Blazor code can't interact directly with those.
 
-For example, to specify that action can return list of strings with status code `200`, you could use:
+## 4. In a Blazor project, what does the `App.razor` file do?
 
-```cs
-[ProducesReponseType(200, Type = typeof(IEnumerable<string>))] 
-```
+It configures a router for **all** of the components in the current assembly. This, for example, includes shared layout and error pages.
 
-## 5. List three methods that can be called to return responses with different status codes.
+## 5. What is a benefit of using the `<NavLink>` component?
 
-- `Ok(content)` - response with status code `200` and content as passed by argument
-- `NotFound([string error])` - response with status code `404` and optional message
-- `NoContentResult()` - response with status code `204` and no content.
+It automatically shows the selected page differently as compared to the normal `<a>` tags.
 
-## 6. List four ways that you can test a web service.
+## 6. How can you pass a value into a component?
 
-- Using `cURL` or similar CLI tool
-- Using GUI REST client like `Postman` or `Insomnia` (which can be IDE extensions like `REST Client` for VS Code)
-- By using Swagger in your app and making requests using web GUI it exposes
-- Making simpler (GET, with no content) requests with web browser.
+By annotating a public property in code block or code-behind file with `[Parameter]`. This exposes it externally as tag's attribute.
 
-##  7. Why should you not wrap your use of `HttpClient` in a `using` statement to dispose of it when you are finished even though it implements the `IDisposable` interface, and what should you use instead?
+##  7. What is a benefit of using the `<EditForm>` component?
 
-Since this would allocate and free excessive number of sockets unnecessarily. Additionally it would require configuring new clients during each creation. Using `HttpClientFactory` is encouraged to share common configuration and ensure efficient use of resources.  
+It enables additional functionality such as validation based on standard validation attributes.
 
-## 8. What does the acronym CORS stand for and why is it important to enable it in a web service?
+## 8. How can you execute some statements when parameters are set?
 
-**C**ros-**O**rigin **R**esource **S**haring it's a way to specify from which origins (combinations of host and port) and which types of requests are allowed to a web service. This mechanism uses HTTP request headers to check if the request will be allowed (so-called preflight request). Servers responds with headers specifying it's policy on request from different origins.
-If it isn't set browsers apply same origin policy by default which may not be appropriate for our usecase.
+By overriding the `OnParamteresSetAsync` method in your component.
 
-## 9. How can you enable clients to detect if your web service is healthy with ASP.NET Core 2.2 and later?
+## 9. How can you execute some statements when a component appears?
 
-ASP.NET Core 2.2 adds health check api which enables exposing health checks as well as customizing requirements for service to be considered working properly (for example also checking database connection).
+By overriding the `OnInitializedAsync` method in your component.
 
-## 10. What benefits does endpoint routing provide?
+## 10. What are two key differences in the `Program` class between a Blazor Server and Blazor WebAssembly project?
 
-It allows for more performant routing (meaning selection of appropriate controller and action). It also extracts routing from the MVC middleware enabling plugging other things into pipeline between route resolution and calling action.
+1. Blazor WASM uses `WebAssemblyHostBuilder` instead of `Host.CreateDefaultBuilder`
+2. Blazor WASM projects register `HttpClient` for the base address of the app by default (used for sending requests to the server from the client side code in the browser).
