@@ -1,0 +1,7 @@
+@page "/timestable/{number:int}"
+<h3>Times tables for number @Number</h3>
+<TimesTable Number="@Number"></TimesTable>
+@code {
+    [Parameter]
+    public int Number { get; set; }
+}
