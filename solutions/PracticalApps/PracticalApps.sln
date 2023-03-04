@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorWasm.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.BlazorWasm.Server", "Northwind.BlazorWasm\Server\Northwind.BlazorWasm.Server.csproj", "{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.OData", "Northwind.OData\Northwind.OData.csproj", "{FDAC2FE4-9704-419E-8A1D-98674E1AAA20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,5 +75,9 @@ Global
 		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E183FB2-5F0B-4136-B1E5-8F5DDF8F2925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDAC2FE4-9704-419E-8A1D-98674E1AAA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDAC2FE4-9704-419E-8A1D-98674E1AAA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDAC2FE4-9704-419E-8A1D-98674E1AAA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDAC2FE4-9704-419E-8A1D-98674E1AAA20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
