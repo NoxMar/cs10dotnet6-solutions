@@ -1,5 +1,6 @@
 using GraphQL.Server; // GraphQLOptions
 using GraphQL.SystemTextJson;
+using Packt.Shared;
 using Northwind.GraphQL; // GreetQuery, NorthwindSchema
 
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("https://localhost:5005/");
 
 // Add services to the container.
+builder.Services.AddNorthwindContext();
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<NorthwindSchema>();
