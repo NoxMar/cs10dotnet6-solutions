@@ -157,4 +157,9 @@ public class HomeController : Controller
 
         return View(model);
     }
+
+    public async Task<IActionResult> Services()
+    {
+        return View();
+    }
 }
