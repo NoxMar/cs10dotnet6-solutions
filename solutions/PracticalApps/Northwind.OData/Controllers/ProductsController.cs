@@ -15,10 +15,26 @@ public class ProductsController : ODataController
     }
 
     [EnableQuery]
-    public IActionResult Get()
-        => Ok(_db.Products);
+    public IActionResult GetAll(int version = 1)
+    {
+        Console.WriteLine($"ProductsController version {version}");
+        return Ok(_db.Products);
+    }
 
     [EnableQuery]
-    public IActionResult Get(int key)
-        => Ok(_db.Products.Find(key));
+    public IActionResult Get(int key, int version = 1)
+    {
+        Console.WriteLine($"ProductsController version {version}.");
+        var p = _db.Products.Find(key);
+        if (p is null)
+        {
+            return NotFound($"Product with id {key} not found");
+        }
+
+        if (version == 2)
+        {
+            p.ProductName += " version 2.0";
+        }
+        return Ok(p);
+    }
 }

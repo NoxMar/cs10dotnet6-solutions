@@ -19,6 +19,8 @@ builder.Services.AddControllers()
             model: GetEdmModelForCatalog())
         .AddRouteComponents(routePrefix: "ordersystem",
             model: GetEdmModelForOrderSystem())
+        .AddRouteComponents(routePrefix: "v{version:int}",
+            model: GetEdmModelForCatalog())
     
         // enable query options
         .Select() // enable $select
