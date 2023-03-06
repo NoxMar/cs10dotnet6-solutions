@@ -37,4 +37,11 @@ public class ProductsController : ODataController
         }
         return Ok(p);
     }
+
+    public IActionResult Post([FromBody] Product product)
+    {
+        _db.Products.Add(product);
+        _db.SaveChanges();
+        return Created(product);
+    }
 }
