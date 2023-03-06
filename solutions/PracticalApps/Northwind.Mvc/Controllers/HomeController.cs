@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -160,6 +160,36 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Services()
     {
+        try
+        {
+            HttpClient client = _clientFactory.CreateClient(name: "Northwind.GraphQL");
+
+            HttpRequestMessage request = new(HttpMethod.Post, "graphql");
+            request.Content = new StringContent(@"
+            {
+                products (categoryId: 8) {
+                    productId
+                    productName
+                    unitsInStock
+                }
+            }", encoding: Encoding.UTF8, mediaType: "application/graphql");
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                ViewData["seafoodProducts"] =
+                    (await response.Content.ReadFromJsonAsync<GraphQLProducts>())?.Data?.Products;
+            }
+            else
+            {
+                ViewData["seafoodProducts"] = Enumerable.Empty<Product>().ToArray();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning("Northwind.GraphQL service exception: {message}", ex.Message);
+        }
         return View();
     }
 }

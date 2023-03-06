@@ -1,7 +1,20 @@
+@using Packt.Shared
 @{
     ViewData["Title"] = "Services";
+    var seafoodProducts = ViewData["seafoodProducts"] as Product[];
 }
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
-    
+    @if (seafoodProducts is not null)
+    {
+        <h2>Seafood products using GraphQL</h2>
+        <p>
+            @foreach (var p in seafoodProducts)
+            {
+                <span class="badge badge-success">
+                    @p.ProductId @p.ProductName - @(p.UnitsInStock ?? 0) in stock
+                </span>
+            }
+        </p>
+    }
 </div>

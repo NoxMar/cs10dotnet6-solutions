@@ -32,6 +32,14 @@ builder.Services.AddHttpClient("Minimal.WebApi", options =>
         new MediaTypeWithQualityHeaderValue("application/json", 1.0));
 });
 
+builder.Services.AddHttpClient(name: "Northwind.GraphQL",
+    configureClient: options =>
+    {
+        options.BaseAddress = new("https://localhost:5005/");
+        options.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json", 1.0));
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
