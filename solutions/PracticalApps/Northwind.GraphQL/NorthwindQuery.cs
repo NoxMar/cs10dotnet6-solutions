@@ -32,7 +32,7 @@ public class NorthwindQuery : ObjectGraphType
             arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "categoryId" }),
             resolve: ctx =>
             {
-                var category = db.Categories.Find(ctx.GetArgument<IntGraphType>("categoryId"));
+                var category = db.Categories.Find(ctx.GetArgument<int>("categoryId"));
                 db.Entry(category).Collection(c => c.Products).Load();
                 return category?.Products;
             }
