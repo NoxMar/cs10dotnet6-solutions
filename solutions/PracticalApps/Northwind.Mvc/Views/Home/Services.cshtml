@@ -5,6 +5,10 @@
 }
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
+    @if (ViewData["greeting"] is not null)
+    {
+        <p class="alert alert-primary">@ViewData["greeting"]</p>
+    }
     @if (seafoodProducts is not null)
     {
         <h2>Seafood products using GraphQL</h2>

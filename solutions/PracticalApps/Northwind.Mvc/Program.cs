@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Northwind.Mvc.Data;
 using System.Net.Http.Headers; // MediaTypeWithQualityHeaderValue
+using Grpc.Net.Client; // GrpcChannel
 using Packt.Shared;
 
 var builder = WebApplication.CreateBuilder(args);

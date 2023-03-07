@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -189,6 +190,18 @@ public class HomeController : Controller
         catch (Exception ex)
         {
             _logger.LogWarning("Northwind.GraphQL service exception: {message}", ex.Message);
+        }
+
+        try
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:5006");
+            Greeter.GreeterClient greeter = new(channel);
+            var reply = await greeter.SayHelloAsync(new HelloRequest{ Name = "Henrietta" });
+            ViewData["greeting"] = $"Greeting from gRPC service: {reply.Message}";
+        }
+        catch (Exception)
+        {
+            _logger.LogWarning("Northwind.gRPC service is not responding.");
         }
         return View();
     }
