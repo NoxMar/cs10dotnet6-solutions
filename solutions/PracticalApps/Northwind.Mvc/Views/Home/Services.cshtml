@@ -11,7 +11,7 @@
         <p>
             @foreach (var p in seafoodProducts)
             {
-                <span class="badge badge-success">
+                <span class="badge bg-success">
                     @p.ProductId @p.ProductName - @(p.UnitsInStock ?? 0) in stock
                 </span>
             }
