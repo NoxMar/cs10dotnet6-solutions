@@ -9,6 +9,13 @@
     {
         <p class="alert alert-primary">@ViewData["greeting"]</p>
     }
+    @if (ViewData["shipr"] is not null)
+    {
+        var shipper = ViewData["shipr"] as Shipper;
+        <p class="alert alert-danger">
+            ShipperID: @shipper?.ShipperId, CompanyName: @shipper?.CompanyName, Phone: @shipper?.Phone
+        </p>
+    }
     @if (seafoodProducts is not null)
     {
         <h2>Seafood products using GraphQL</h2>

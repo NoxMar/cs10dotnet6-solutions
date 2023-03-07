@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Packt.Shared;
 using Northwind.Common;
+using Northwind.Nvc;
 
 namespace Northwind.Mvc.Controllers;
 
@@ -198,6 +199,23 @@ public class HomeController : Controller
             Greeter.GreeterClient greeter = new(channel);
             var reply = await greeter.SayHelloAsync(new HelloRequest{ Name = "Henrietta" });
             ViewData["greeting"] = $"Greeting from gRPC service: {reply.Message}";
+        }
+        catch (Exception)
+        {
+            _logger.LogWarning("Northwind.gRPC service is not responding.");
+        }
+
+        try
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:5006");
+            Shipr.ShiprClient shipr = new(channel);
+            var reply = await shipr.GetShipperAsync(new ShipperRequest { ShipperId = 3 });
+            ViewData["shipr"] = new Shipper()
+            {
+                ShipperId = reply.ShipperId,
+                CompanyName = reply.CompanyName,
+                Phone = reply.Phone
+            };
         }
         catch (Exception)
         {
